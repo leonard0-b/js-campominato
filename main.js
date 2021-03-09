@@ -9,15 +9,32 @@
 var numeriBombe = [];
 var numeriSafe = [];
 
-var numRandom;
-
 while (numeriBombe.length < 16) {
-  numRandom = getRandom (1,100);
+  var numRandom = getRandom (1,100);
   if (!numeriBombe.includes(numRandom)) {
     numeriBombe.push(numRandom);
   }
 }
 console.log(numeriBombe);
+
+while (numeriSafe.length < 2) {
+  var numUtente = parseInt(prompt("Dammi un numero:"));
+    if (isNaN(numUtente)) {
+      console.log("Non è un numero");
+    } else if (1 >= numUtente || numUtente >= 100) {
+      console.log("Il numero non è tra 1 e 100");
+    } else {
+      if (!numeriBombe.includes(numUtente) && !numeriSafe.includes(numUtente)) {
+        numeriSafe.push(numUtente);
+      } else {
+        console.log("in numero esiste già");
+      }
+    }
+}
+
+for (var i = 0; i < numeriSafe.length; i++) {
+  console.log(numeriSafe[i]);
+}
 
 
 
