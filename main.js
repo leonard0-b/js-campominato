@@ -9,32 +9,29 @@
 var numeriBombe = [];
 var numeriSafe = [];
 
-while (numeriBombe.length < 16) {
+for (var i = 0; i < 16; i++) {
   var numRandom = getRandom (1,100);
-  if (!numeriBombe.includes(numRandom)) {
-    numeriBombe.push(numRandom);
+  while (numeriBombe.includes(numRandom)) {
+    numRandom = getRandom (1,100);
   }
+  numeriBombe.push(numRandom);
 }
+
 console.log(numeriBombe);
 
-while (numeriSafe.length < 2) {
-  var numUtente = parseInt(prompt("Dammi un numero:"));
-    if (isNaN(numUtente)) {
-      console.log("Non è un numero");
-    } else if (1 >= numUtente || numUtente >= 100) {
-      console.log("Il numero non è tra 1 e 100");
-    } else {
-      if (!numeriBombe.includes(numUtente) && !numeriSafe.includes(numUtente)) {
-        numeriSafe.push(numUtente);
-      } else {
-        console.log("in numero esiste già");
-      }
-    }
+while (numeriSafe.length < (100 - 16) && !numeriBombe.includes(numUtente)) {
+  var numUtente = parseInt(prompt("Dammi un numero da 1 a 100: "));
+  while (isNaN(numUtente) || numUtente >= 100 || numUtente < 1) {
+    var nomUtente = parseInt(prompt("Puoi inserire soltanto numeri che siano compresi tra 1 e 100"));
+  }
+  while (numeriSafe.includes(numUtente)) {
+    var nomUtente = parseInt(prompt("Hai già inserito questo numero!"))
+  }
+  numeriSafe.push(numUtente);
 }
+console.log(numeriSafe);
 
-for (var i = 0; i < numeriSafe.length; i++) {
-  console.log(numeriSafe[i]);
-}
+
 
 
 
