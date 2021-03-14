@@ -6,35 +6,62 @@
 // La partita termina quando il giocatore inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
 
+do {
+  var difficolta = (prompt("Con quale difficoltà vuoi giocare? Facile -> f Medio -> m Difficile -> d").toLowerCase());
+} while (difficolta !== "f" && difficolta !== "m" && difficolta !== "d");
+
+var totaleNumeri = 0
+
+switch (difficolta) {
+  case "f":
+      totaleNumeri = 100;
+    break;
+  case "m":
+      totaleNumeri = 80;
+    break;
+  case "d":
+      totaleNumeri = 50;
+    break;
+}
+
 var numeriBombe = [];
 var numeriSafe = [];
+var numeroUtente = 0;
+var totaleBombe = 16;
+var numeroRandom = 0;
+var i = 0;
 
-for (var i = 0; i < 16; i++) {
-  var numRandom = getRandom (1,100);
-  while (numeriBombe.includes(numRandom)) {
-    numRandom = getRandom (1,100);
+while (i < totaleBombe) {
+  numeroRandom = getRandom(1, totaleNumeri);
+   if (numeriBombe.includes(numeroRandom)) {
+   } else {
+  numeriBombe.push(numeroRandom);
+  i++;
   }
-  numeriBombe.push(numRandom);
 }
-
 console.log(numeriBombe);
 
-while (numeriSafe.length < (100 - 16) && !numeriBombe.includes(numUtente)) {
-  var numUtente = parseInt(prompt("Dammi un numero da 1 a 100: "));
-  while (isNaN(numUtente) || numUtente >= 100 || numUtente < 1) {
-    var nomUtente = parseInt(prompt("Puoi inserire soltanto numeri che siano compresi tra 1 e 100"));
+flag = false;
+
+while (numeriSafe.length < totaleNumeri - totaleBombe && flag == false) {
+  numeroUtente = parseInt(prompt("Inserisci un numero tra 1 e " + totaleNumeri + ":"))
+  if (numeriSafe.includes(numeroUtente)) {
+    alert("Hai già inserito questo numero!");
+  } else if (numeroUtente <= 0 || numeroUtente > totaleNumeri || isNaN(numeroUtente)) {
+    alert("Inserisci solo un numero tra 1 e 100!");
+  } else if (numeriBombe.includes(numeroUtente)) {
+    alert("Boom! Sei esploso!");
+    alert("il numero " + numeroUtente + " era una bomba!" )
+    flag = true;
+  } else {
+    numeriSafe.push(numeroUtente);
+    console.log("Hai inserito il numero: " + numeroUtente);
   }
-  while (numeriSafe.includes(numUtente)) {
-    var nomUtente = parseInt(prompt("Hai già inserito questo numero!"))
-  }
-  numeriSafe.push(numUtente);
 }
-console.log(numeriSafe);
 
+var punteggio = numeriSafe.length;
 
-
-
-
+alert("Hai totalizzato: " + punteggio + "!");
 
 // FUNCTIONS
 function getRandom(min, max) {
